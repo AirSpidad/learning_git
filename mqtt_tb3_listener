@@ -1,15 +1,29 @@
 import paho.mqtt.client as mqtt
 BROKER_IP = "10.203.159.208"
-TOPIC = "uagv/v1/OSRF/robot2/state"
+TOPIC_STATE = "uagv/v1/OSRF/robot2/state"
+TOPIC_CONNECTION = "uagv/v1/OSRF/robot2/connection"
+TOPIC_FACTSHEET = "uagv/v1/OSRF/robot2/factsheet"
+TOPIC_ORDER = "uagv/v1/OSRF/robot2/order"
+TOPIC_VISUALIZATION = "uagv/v1/OSRF/robot2/visualization"
+TOPIC_INSTANTACTIONS = "uagv/v1/OSRF/robot2/instantActions"
+
+
 # Die Callback-Funktion wird aufgerufen, wenn eine Verbindung zum Broker hergestellt wurde
 def on_connect(client, userdata, flags, rc, properties):
     print("Verbindung hergestellt mit Ergebniscode "+str(rc))
-    client.subscribe(TOPIC)  # Abonnieren Sie Ihr Thema hier
+    client.subscribe(TOPIC_STATE)  # Abonnieren Sie Ihr Thema hier
+    client.subscribe(TOPIC_CONNECTION)  # Abonnieren Sie Ihr Thema hier
+    client.subscribe(TOPIC_FACTSHEET)  # Abonnieren Sie Ihr Thema hier
+    client.subscribe(TOPIC_ORDER)  # Abonnieren Sie Ihr Thema hier
+    client.subscribe(TOPIC_VISUALIZATION)  # Abonnieren Sie Ihr Thema hier
+    client.subscribe(TOPIC_INSTANTACTIONS)  # Abonnieren Sie Ihr Thema hier
+    
 
 # Die Callback-Funktion wird aufgerufen, wenn eine Nachricht für ein abonniertes Thema empfangen wurde
 def on_message(client, userdata, msg):
-    print("-----------------Message-----------------")
+    print("-----------------START Message-----------------")
     print(f"Thema: {msg.topic}\nNachricht: {msg.payload.decode()}")
+    print("-----------------END Message-----------------")
 
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 client.on_connect = on_connect
