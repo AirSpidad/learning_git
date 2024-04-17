@@ -8,8 +8,11 @@ def on_connect(client, userdata, flags, rc, properties):
 
 # Die Callback-Funktion wird aufgerufen, wenn eine Nachricht für ein abonniertes Thema empfangen wurde
 def on_message(client, userdata, msg):
+    print("----------Message Nr." + message_nr + " since listening----------")
+    message_nr += 1
     print(f"Thema: {msg.topic}\nNachricht: {msg.payload.decode()}")
 
+message_nr = 1
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 client.on_connect = on_connect
 client.on_message = on_message
